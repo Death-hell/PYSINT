@@ -1,0 +1,9 @@
+python-whois
+ipwhois
+httpx
+re
+dnspython
+requests
+socket
+ssl
+datetime
