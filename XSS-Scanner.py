@@ -1,80 +1,104 @@
 import asyncio
 import httpx
 import urllib.parse
+from asyncio import Semaphore
+from rich.console import Console
+from rich.table import Table
+from rich.progress import Progress, SpinnerColumn, TextColumn
 
-# Path to your XSS payload wordlist
 WORDLIST_FILE = "XSS-wordlist.txt"
+MAX_CONCURRENT_REQUESTS = 10
 
-async def test_xss(client, url, param, payload):
-    try:
-        # Append payload to parameter
-        parsed = urllib.parse.urlparse(url)
-        query_params = urllib.parse.parse_qs(parsed.query)
-        query_params[param] = payload
-        new_query = urllib.parse.urlencode(query_params, doseq=True)
-        full_url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
-        
-        # Send GET request
-        response = await client.get(full_url, timeout=10.0, follow_redirects=True)
-        
-        # Check if payload appears in response (basic XSS reflection check)
-        if payload in response.text:
-            print(f"[VULNERABLE] {param} -> {response.status_code} | URL: {full_url}")
-            return (param, full_url, response.status_code)
-        else:
-            print(f"[SAFE] {param} -> {response.status_code} | URL: {full_url}")
-    except Exception as e:
-        print(f"[ERROR] {param} -> {e}")
-    return None
+console = Console()
+
+async def test_xss(client, url, param, payload, sem: Semaphore):
+    async with sem:
+        try:
+            parsed = urllib.parse.urlparse(url)
+            query_params = urllib.parse.parse_qs(parsed.query)
+            query_params[param] = payload
+            new_query = urllib.parse.urlencode(query_params, doseq=True)
+            full_url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}?{new_query}"
+
+            response = await client.get(full_url, timeout=15.0)
+
+            if payload in response.text:
+                return (param, full_url, response.status_code, True)
+            else:
+                return (param, full_url, response.status_code, False)
+
+        except httpx.RequestError as e:
+            return (param, None, None, f"Request failed: {e}")
+        except Exception as e:
+            return (param, None, None, f"Error: {e}")
 
 async def run_xss_scan():
-    print("=== PYSINT XSS Scanner ===")
-    url = input("Enter target URL (with http/https and at least one parameter): ").strip()
+    console.rule("[bold red]PYSINT XSS Scanner[/bold red]")
+
+    url = console.input("[bold cyan]Enter target URL (with http/https and at least one parameter): [/bold cyan]").strip()
+    params_input = console.input("[bold cyan]Enter comma-separated parameters to test (or leave blank for all): [/bold cyan]").strip()
     
-    # Ask user which parameters to test
-    params_input = input("Enter comma-separated parameters to test (or leave blank for all): ").strip()
     if params_input:
         parameters = [p.strip() for p in params_input.split(",")]
     else:
-        # If no parameters specified, try to extract all query parameters
         parsed = urllib.parse.urlparse(url)
         parameters = list(urllib.parse.parse_qs(parsed.query).keys())
         if not parameters:
-            print("No parameters found in URL. Exiting.")
+            console.print("[bold red]No parameters found in URL. Exiting.[/bold red]")
             return
-    
-    # Ask user how many payloads to test (0 = all)
-    max_payloads_input = input("Enter maximum number of payloads to test (0 = all): ").strip()
+
+    max_payloads_input = console.input("[bold cyan]Enter maximum number of payloads to test (0 = all): [/bold cyan]").strip()
     max_payloads = int(max_payloads_input) if max_payloads_input.isdigit() else 0
 
-    # Load payloads
     try:
         with open(WORDLIST_FILE, "r", encoding="utf-8") as f:
             payloads = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"Wordlist file {WORDLIST_FILE} not found. Exiting.")
+        console.print(f"[bold red]Wordlist file {WORDLIST_FILE} not found. Exiting.[/bold red]")
         return
 
     if max_payloads > 0:
         payloads = payloads[:max_payloads]
 
-    print(f"\n🔍 Testing {len(payloads)} XSS payloads on {len(parameters)} parameters...\n")
-    
+    console.print(f"\n[bold yellow]🔍 Testing {len(payloads)} XSS payloads on {len(parameters)} parameters...[/bold yellow]\n")
+
+    sem = Semaphore(MAX_CONCURRENT_REQUESTS)
+    results = []
+
     async with httpx.AsyncClient(follow_redirects=True) as client:
-        tasks = []
-        for param in parameters:
-            for payload in payloads:
-                tasks.append(test_xss(client, url, param, payload))
-        results = await asyncio.gather(*tasks)
-    
-    # Filter out None results
-    vulns = [r for r in results if r]
-    if vulns:
-        print(f"\n✅ Scan finished. Vulnerable parameters ({len(vulns)} found):")
-        for param, full_url, status in vulns:
-            print(f"{param} -> {status} | URL: {full_url}")
-    else:
-        print("\n✅ Scan finished. No vulnerable parameters found.")
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=True,
+        ) as progress:
+            task = progress.add_task("[green]Scanning...", total=len(parameters)*len(payloads))
+            tasks = []
+            for param in parameters:
+                for payload in payloads:
+                    coro = test_xss(client, url, param, payload, sem)
+                    coro = asyncio.create_task(coro)
+                    coro.add_done_callback(lambda _: progress.update(task, advance=1))
+                    tasks.append(coro)
+            results = await asyncio.gather(*tasks)
+
+    table = Table(title="XSS Scan Results", show_lines=True)
+    table.add_column("Parameter", style="cyan", no_wrap=True)
+    table.add_column("Status/Code", style="magenta")
+    table.add_column("URL", style="green")
+
+    vulns = 0
+    for r in results:
+        param, full_url, status, info = r
+        if info is True:
+            table.add_row(param, f"[bold red]VULNERABLE ({status})[/bold red]", full_url)
+            vulns += 1
+        elif info is False:
+            table.add_row(param, f"[green]SAFE ({status})[/green]", full_url)
+        else:
+            table.add_row(param, f"[yellow]ERROR[/yellow]", str(info))
+
+    console.print(table)
+    console.print(f"\n[bold yellow]✅ Scan finished. Vulnerable parameters found: {vulns}[/bold yellow]")
 
 if __name__ == "__main__":
     asyncio.run(run_xss_scan())

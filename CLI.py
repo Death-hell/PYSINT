@@ -1,5 +1,11 @@
+from rich.console import Console
+from rich.table import Table
+from rich.prompt import Prompt
+from rich.panel import Panel
 import subprocess
 import sys
+
+console = Console()
 
 MODULES = {
     "1": ("Whois/IP Lookup", "python analyzer-whois.py"),
@@ -14,29 +20,41 @@ MODULES = {
     "10": ("Wayback / Archive Lookup", "python wayback-Scan.py"),
     "11": ("Technology / CMS Detection", "python tech-detector.py"),
     "12": ("Port / Service Scanner", "python port-scan.py"),
+    "13": ("XSS Scanner", "python XSS-Scanner.py"),
+    "14": ("LFI Scanner", "python LFI-Scanner.py"),
+    "15": ("SQLi Scanner", "python SQLi-Scanner.py"),
+    "16": ("GeoIP Lookup", "python geoip-scan.py"),
     "0": ("Exit", None)
 }
 
 def main():
+    console.print(Panel.fit("[bold cyan]PYSINT - Master OSINT Scanner[/bold cyan]", border_style="bright_blue"))
+
     while True:
-        print("\n=== Master OSINT Scanner ===\n")
+        table = Table(title="Modules", show_header=True, header_style="bold magenta")
+        table.add_column("Option", style="bold yellow")
+        table.add_column("Module Name", style="bold green")
+
         for key, (name, _) in MODULES.items():
-            print(f"{key} - {name}")
-        choice = input("\nSelect an option: ").strip()
-        
+            table.add_row(key, name)
+
+        console.print(table)
+
+        choice = Prompt.ask("\nSelect an option", default="0").strip()
+
         if choice == "0":
-            print("Exiting...")
+            console.print("[bold red]Exiting...[/bold red]")
             sys.exit(0)
-        
+
         if choice in MODULES:
             name, command = MODULES[choice]
-            print(f"\n🔹 Running {name}...\n")
+            console.print(f"\n[bold cyan]🔹 Running {name}...[/bold cyan]\n")
             try:
                 subprocess.run(command, shell=True)
             except Exception as e:
-                print(f"Error running module {name}: {e}")
+                console.print(f"[bold red]Error running module {name}:[/bold red] {e}")
         else:
-            print("Invalid choice, try again.")
+            console.print("[bold red]Invalid choice, try again.[/bold red]")
 
 if __name__ == "__main__":
     main()

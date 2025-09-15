@@ -1,7 +1,13 @@
 import httpx
 import re
+from rich.console import Console
+from rich.prompt import Prompt
+from rich.table import Table
+from rich.panel import Panel
 
-def find_emails(url):
+console = Console()
+
+def find_emails(url: str):
     try:
         if not url.startswith(("http://", "https://")):
             url = "http://" + url
@@ -9,20 +15,28 @@ def find_emails(url):
         response = httpx.get(url, timeout=10)
         response.raise_for_status()
 
+        # Regex para encontrar emails
         emails = re.findall(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", response.text)
 
         if emails:
-            print(f"\nEmails found on {url}:")
-            for email in set(emails):
-                print(email)
+            table = Table(title=f"Emails found on {url}", show_lines=True)
+            table.add_column("Email Address", style="cyan")
+            for email in sorted(set(emails)):
+                table.add_row(email)
+            console.print(table)
         else:
-            print(f"\nNo emails found on {url}.")
+            console.print(Panel(f"No emails found on [bold]{url}[/bold].", style="yellow"))
 
     except httpx.RequestError as e:
-        print("Error accessing the website:", e)
+        console.print(Panel(f"Error accessing the website: {e}", style="red"))
     except httpx.HTTPStatusError as e:
-        print("HTTP error:", e)
+        console.print(Panel(f"HTTP error: {e}", style="red"))
+
+def main():
+    console.rule("[bold green]PYSINT Email Extractor[/bold green]")
+    url = Prompt.ask("[bold cyan]Enter the URL of the website to search for emails[/bold cyan]").strip()
+    find_emails(url)
+    console.print("\n✅ Email scan finished.")
 
 if __name__ == "__main__":
-    url = input("Enter the URL of the website to search for emails: ").strip()
-    find_emails(url)
+    main()

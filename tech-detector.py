@@ -1,8 +1,14 @@
 import asyncio
 import httpx
 import re
+from rich.console import Console
+from rich.table import Table
+from rich.progress import track
+from rich.prompt import Prompt
 
-# Dicionário de padrões para CMS / Frameworks / JS libs
+console = Console()
+
+# Padrões ampliados para CMS / Frameworks / JS libs / Servidores
 TECH_PATTERNS = {
     "WordPress": [r"wp-content", r"wp-includes", r"wordpress"],
     "Joomla": [r"Joomla!", r"index.php\?option="],
@@ -10,12 +16,18 @@ TECH_PATTERNS = {
     "Magento": [r"Magento", r"/skin/frontend/"],
     "Laravel": [r"/public/", r"laravel"],
     "Django": [r"csrftoken", r"django_session"],
-    "React": [r"react", r"__reactinternal"],
+    "React": [r"react", r"__reactinternal", r"data-reactroot"],
     "Angular": [r"angular", r"ng-version"],
     "Vue.js": [r"vue", r"v-cloak"],
-    "Nginx": [],  # Detect via header
+    "Bootstrap": [r"bootstrap"],
+    "jQuery": [r"jquery"],
+    "Nginx": [],
     "Apache": [],
-    "IIS": []
+    "IIS": [],
+    "Express": [r"express"],
+    "Flask": [r"flask"],
+    "Next.js": [r"_next"],
+    "Gatsby": [r"gatsby"]
 }
 
 async def detect_tech(client, domain):
@@ -46,24 +58,30 @@ async def detect_tech(client, domain):
         return domain, set()
 
 async def scan_domains(domains):
-    results = []
     async with httpx.AsyncClient(follow_redirects=True, timeout=5) as client:
         tasks = [detect_tech(client, domain) for domain in domains]
-        results = await asyncio.gather(*tasks)
-    return results
+        results = []
+        for coro in track(asyncio.as_completed(tasks), total=len(tasks), description="Scanning domains..."):
+            result = await coro
+            results.append(result)
+        return results
 
-if __name__ == "__main__":
-    input_domains = input("Enter website(s) (comma-separated, with http/https): ").strip()
+def main():
+    console.rule("[bold green]PYSINT Technology Detector[/bold green]")
+    input_domains = Prompt.ask("Enter website(s) (comma-separated, with http/https)").strip()
     domains = [d.strip() for d in input_domains.split(",")]
 
     results = asyncio.run(scan_domains(domains))
 
-    print("\n🔍 Technology Detection Results:\n")
+    table = Table(title="Technology Detection", header_style="bold magenta")
+    table.add_column("Domain", style="cyan")
+    table.add_column("Detected Technologies", style="green")
+
     for domain, detected in results:
-        print(f"{domain}:")
-        if detected:
-            for tech in detected:
-                print(f"- {tech}")
-        else:
-            print("- No known technologies detected")
-        print()
+        tech_list = ", ".join(sorted(detected)) if detected else "None detected"
+        table.add_row(domain, tech_list)
+
+    console.print(table)
+
+if __name__ == "__main__":
+    main()
