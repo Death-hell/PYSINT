@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Perfeito! 😎 Aqui está um README.md completo e profissional para o seu scanner PYSINT, em inglês, pronto para GitHub:
 
 
@@ -117,3 +118,7 @@ Tested on Linux, Termux, and Windows (with minor adjustments)
 Wordlists are located in the wordlists/ directory
 
 Use responsibly and ethically
+=======
+# PYSINT
+an OSINT Framework made in python 
+>>>>>>> 9238042bdb75d7f27a6d19b648df1294335a486d
