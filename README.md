@@ -1,61 +1,84 @@
 
+# PYSINT — Python OSINT Scanner
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)]
+
+PYSINT is a modular, Python-based **OSINT (Open Source Intelligence) scanner** built for education and authorized security testing. It gathers information about domains, IPs and web applications using a collection of lightweight, easy-to-run modules.
 
 ---
 
-# PYSINT - Python OSINT Scanner
+## 🚀 What’s included
 
-PYSINT is a modular, Python-based **OSINT (Open Source Intelligence) scanner** designed for educational purposes and authorized security testing. It combines multiple OSINT techniques to gather information about domains, IPs, websites, and more.
-
----
-
-## ⚡ Features
-
-PYSINT includes the following modules:
+PYSINT is intentionally modular — run single checks or chain multiple modules for a full reconnaissance run. New (2025) additions: async vulnerability scanners and wordlists.
 
 | #  | Module Name                     | Description                                                                 |
 |----|---------------------------------|-----------------------------------------------------------------------------|
-| 1  | Whois/IP Lookup                 | Retrieves domain registration and IP information.                           |
-| 2  | DNS Lookup                       | Queries DNS records (A, MX, NS, TXT, CNAME).                                |
-| 3  | HTML Scraper                     | Fetches website HTML content.                                               |
-| 4  | Email Extractor                  | Extracts email addresses from HTML pages.                                   |
-| 5  | Subdomain Finder                 | Enumerates subdomains of a target domain.                                   |
-| 6  | Parameter Scanner                | Tests website URL parameters for responsiveness.                            |
-| 7  | Directory / File Scanner         | Searches for directories and files on a target site using wordlists.        |
-| 8  | SSL / TLS Info                    | Retrieves SSL/TLS certificate information.                                  |
-| 9  | HTTP Headers                      | Displays HTTP headers returned by a website.                                 |
-| 10 | Wayback / Archive Lookup          | Checks historical snapshots of a site using Wayback Machine.               |
-| 11 | Technology / CMS Detection        | Detects CMS, frameworks, JS libraries, and server info.                     |
-| 12 | Port / Service Scanner            | Scans common open ports and identifies associated services.                 |
-| 13 | Master OSINT Scanner              | Integrates all modules in a single CLI menu for easy use.                  |
+| 1  | Whois / IP Lookup               | Domain registration and IP ownership (RDAP/IPWhois).                       |
+| 2  | DNS Lookup                      | Query DNS records (A, AAAA, MX, NS, TXT, CNAME) using `dnspython`.         |
+| 3  | HTML Scraper                    | Retrieve page HTML (supports redirects).                                   |
+| 4  | Email Extractor                 | Extract mailto/email patterns from HTML.                                    |
+| 5  | Subdomain Finder                | Enumerate subdomains (crt.sh + checks).                                     |
+| 6  | Parameter Scanner               | Test URL parameters against a parameter wordlist.                           |
+| 7  | Directory / File Scanner        | Async directory/file brute-force using a directory wordlist.                |
+| 8  | SSL / TLS Info                  | Retrieve certificate details and TLS version.                               |
+| 9  | HTTP Headers                    | Show server headers and security-related headers.                           |
+| 10 | Wayback / Archive Lookup        | Query Wayback Machine snapshots (web.archive.org).                          |
+| 11 | Technology / CMS Detection      | Detect CMS, frameworks and JS libs (async).                                 |
+| 12 | Port / Service Scanner          | Scan common ports and report services (fast threaded scan).                 |
+| 13 | Vulnerability Scanners          | **XSS, LFI and SQLi** (async scanners using wordlists and reflection/error checks). |
+| 14 | Master CLI                      | Central CLI/launcher (`CLI.py`) to run modules from a single interface.     |
+
+---
+
+## 🧰 Wordlists
+
+Ship with curated wordlists (keep them small and useful):
+
+- `XSS-wordlist.txt` — XSS payload candidates
+- `LFI-wordlist.txt` — typical LFI payloads and paths (e.g. `../../etc/passwd`, `/etc/passwd`)
+- `SQLi-wordlist.txt` — common SQLi payloads (quotations, boolean, errors)
+- `directory-wordlist.txt` — directories and filenames to brute-force
+- `large-params.txt` — parameter names for parameter scanner
+
+> **Tip:** Avoid committing extremely large wordlists. If you want bigger lists, include them via a release asset or provide links in the README.
 
 ---
 
 ## 📦 Installation
 
-1. Clone the repository:
+Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/YourUsername/PYSINT.git
+git clone https://github.com/Death-hell/PYSINT.git
 cd PYSINT
+python3 -m pip install -r requirements.txt
 
-2. Install dependencies:
+Requirements (examples):
+
+httpx
+
+dnspython
+
+ipwhois
+
+beautifulsoup4
+
+lxml
 
 
-
-pip install -r requirements.txt
+(See requirements.txt for pinned versions.)
 
 
 ---
 
-🛠 Usage
+⚙️ Quick Usage
 
-Run the Master OSINT Scanner to access all modules:
+Run the master CLI (menu):
 
-python master-osint.py
+python CLI.py
 
-Follow the menu prompts to run individual modules.
-
-Alternatively, run any module directly:
+Run a single module:
 
 python analyzer-whois.py
 python dns-hunter.py
@@ -70,53 +93,91 @@ python wayback-Scan.py
 python tech-detector.py
 python port-scan.py
 
+Vulnerability scanners (examples):
 
----
+# XSS scanner (async). Provide a URL with params and a payload limit when prompted
+python XSS-Scanner.py
 
-⚠️ Disclaimer
+# LFI scanner (async)
+python LFI-Scanner.py
 
-This tool is intended for educational purposes and authorized testing only.
+# SQLi scanner (async)
+python SQLi-Scanner.py
 
-The author is not responsible for any misuse of this software. Use responsibly and only on systems you have permission to test. Unauthorized scanning or attacks may be illegal.
+Each vuln scanner asks:
 
+Target URL (include at least one ?param=value)
 
----
+Which parameters to test (or blank to auto-detect)
 
-💡 Contributing
-
-Contributions are welcome! You can:
-
-Add new OSINT modules
-
-Improve scanning efficiency
-
-Expand wordlists or parameter lists
-
-Improve documentation
+Maximum payloads to try (0 = all)
 
 
-Please open an issue or submit a pull request.
+They report [VULNERABLE] or [SAFE] and print the full tested URL + HTTP status.
 
 
 ---
 
-📜 License
+🛡️ Ethical / Legal Notice
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+Use responsibly.
+This project is intended for educational purposes and authorized testing only. You must have explicit permission to scan any target. The author is not responsible for misuse. Unauthorized scanning or attacks may be illegal.
+
+Add a --confirm flag or checklist in your workflow to ensure targets are authorized before running automated scans.
+
+
+---
+
+🧪 Testing & Tips
+
+When testing the vulnerability modules, limit payloads to 1 or 5 to avoid accidental high traffic.
+
+Run scans against local lab instances (DVWA, WebGoat, custom VMs) before targeting real sites.
+
+Use small concurrency limits if you are scanning fragile targets:
+
+Modify httpx.AsyncClient or add semaphore logic if needed.
+
+
+
+
+---
+
+🛠 Contributing
+
+Contributions are welcome:
+
+Add new modules (e.g., OSINT integrations, VirusTotal, SecurityTrails)
+
+Improve detection heuristics (fewer false positives)
+
+Add export/reporting (JSON/CSV) and CI checks
+
+Extend wordlists responsibly
+
+
+Please open an issue or a pull request. Keep changes modular and well-documented.
+
+
+---
+
+📄 License
+
+This project is licensed under the MIT License. See LICENSE for details.
 
 
 ---
 
 📌 Notes
 
-Compatible with Python 3.10+
+Compatible with Python 3.10+ (async features require modern Python).
 
-Tested on Linux, Termux, and Windows (with minor adjustments)
+Tested on Linux and Termux; minor adjustments may be necessary on Windows.
 
-Wordlists are located in the wordlists/ directory
+Wordlists live in the repository root — consider splitting them into wordlists/ if you expand the set.
 
-Use responsibly and ethically
-=======
-# PYSINT
-an OSINT Framework made in python 
->>>>>>> 9238042bdb75d7f27a6d19b648df1294335a486d
+For large scans, respect rate limits and target load — consider batching payloads and lowering concurrency.
+
+
+
+---
