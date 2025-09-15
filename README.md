@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-Perfeito! 😎 Aqui está um README.md completo e profissional para o seu scanner PYSINT, em inglês, pronto para GitHub:
 
 
 ---
