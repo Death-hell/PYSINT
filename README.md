@@ -1,183 +1,174 @@
 
-# PYSINT — Python OSINT Scanner
+---
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)]
+# 🧰 PyToolKit — Python OSINT & Security Toolkit (2025 Edition)
 
-PYSINT is a modular, Python-based **OSINT (Open Source Intelligence) scanner** built for education and authorized security testing. It gathers information about domains, IPs and web applications using a collection of lightweight, easy-to-run modules.
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue?style=for-the-badge)](https://www.python.org/downloads/)
+[![Async Ready](https://img.shields.io/badge/asyncio-modern-green?style=for-the-badge)](https://docs.python.org/3/library/asyncio.html)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
+
+> **PyToolKit** is a modern, modular, and async-ready Python toolkit for **OSINT reconnaissance, web scanning, and security testing** — redesigned in 2025 for performance, reliability, and usability.  
+> ✅ **Ethical Use Only** — For educational purposes and authorized assessments.
 
 ---
 
-## 🚀 What’s included
+## 🌟 What’s New in 2025?
 
-PYSINT is intentionally modular — run single checks or chain multiple modules for a full reconnaissance run. New (2025) additions: async vulnerability scanners and wordlists.
+We didn’t just update — we **re-engineered**.
 
-| #  | Module Name                     | Description                                                                 |
-|----|---------------------------------|-----------------------------------------------------------------------------|
-| 1  | Whois / IP Lookup               | Domain registration and IP ownership (RDAP/IPWhois).                       |
-| 2  | DNS Lookup                      | Query DNS records (A, AAAA, MX, NS, TXT, CNAME) using `dnspython`.         |
-| 3  | HTML Scraper                    | Retrieve page HTML (supports redirects).                                   |
-| 4  | Email Extractor                 | Extract mailto/email patterns from HTML.                                    |
-| 5  | Subdomain Finder                | Enumerate subdomains (crt.sh + checks).                                     |
-| 6  | Parameter Scanner               | Test URL parameters against a parameter wordlist.                           |
-| 7  | Directory / File Scanner        | Async directory/file brute-force using a directory wordlist.                |
-| 8  | SSL / TLS Info                  | Retrieve certificate details and TLS version.                               |
-| 9  | HTTP Headers                    | Show server headers and security-related headers.                           |
-| 10 | Wayback / Archive Lookup        | Query Wayback Machine snapshots (web.archive.org).                          |
-| 11 | Technology / CMS Detection      | Detect CMS, frameworks and JS libs (async).                                 |
-| 12 | Port / Service Scanner          | Scan common ports and report services (fast threaded scan).                 |
-| 13 | Vulnerability Scanners          | **XSS, LFI and SQLi** (async scanners using wordlists and reflection/error checks). |
-| 14 | Master CLI                      | Central CLI/launcher (`CLI.py`) to run modules from a single interface.     |
+- ✨ **All modules refactored** with clean, maintainable, production-ready code
+- ⚡ **Async I/O everywhere** — XSS, SQLi, LFI, Directory, Tech-Detect, Param-Finder now use `asyncio` + `httpx` for blazing-fast scans
+- 🛡️ **Error-proof & robust** — No more crashes on large wordlists or network timeouts
+- 🌍 **New `geoip-scan.py`** — Instantly resolve IPs/domains to location, ISP, timezone
+- 🎨 **Rich CLI interface** — Beautiful tables, progress bars, color-coded results via `rich`
+- 📁 **Structured output** — All scans auto-save to `~/PyToolKit/results/` in **JSON + CSV**
+- 🧭 **Full CLI support** — Every tool now has `--help`, `--debug`, and batch mode
+- 📦 **Lightweight & curated** — No bloat. Only essential, battle-tested wordlists included
 
 ---
 
-## 🧰 Wordlists
+## 🧩 Toolkit Modules
 
-Ship with curated wordlists (keep them small and useful):
-
-- `XSS-wordlist.txt` — XSS payload candidates
-- `LFI-wordlist.txt` — typical LFI payloads and paths (e.g. `../../etc/passwd`, `/etc/passwd`)
-- `SQLi-wordlist.txt` — common SQLi payloads (quotations, boolean, errors)
-- `directory-wordlist.txt` — directories and filenames to brute-force
-- `large-params.txt` — parameter names for parameter scanner
-
-> **Tip:** Avoid committing extremely large wordlists. If you want bigger lists, include them via a release asset or provide links in the README.
+| Category           | Module                  | Description                                                                 |
+|--------------------|-------------------------|-----------------------------------------------------------------------------|
+| 🔍 Intelligence     | `analyzer-whois.py`     | WHOIS & RDAP lookup for domains and IPs                                     |
+| 🌐 DNS             | `dns-hunter.py`         | Query A, MX, TXT, CNAME, NS records from multiple resolvers                 |
+| 🕸️ Web Fetch       | `get-html.py`           | Fetch and preview raw HTML content                                          |
+| 📧 Email Hunter    | `find-email-in-html.py` | Extract emails from page source                                             |
+| 🌳 Subdomains      | `subdomain-finder.py`   | Discover subdomains via crt.sh + active verification                        |
+| 🔑 Parameters      | `param-finder.py`       | Brute-force URL parameters (async, configurable wordlist)                   |
+| 📂 Directories     | `directory-fuzzer.py`   | Find hidden paths/files (async, progress-tracked)                           |
+| 🔐 SSL/TLS         | `ssl-info.py`           | Inspect certificates, validity, SANs, TLS version                           |
+| 📦 Headers         | `headers.py`            | Display HTTP headers + security analysis (HSTS, CSP, etc.)                  |
+| 🕰️ Archives        | `wayback-Scan.py`       | Query historical snapshots from Wayback Machine                             |
+| 🧩 Technologies    | `tech-detector.py`      | Detect CMS, frameworks, JS libs, servers (async, header+HTML patterns)      |
+| 🚪 Ports           | `port-scan.py`          | Fast TCP port scanner for common services                                   |
+| 💥 Vulnerabilities | `XSS-Scanner.py`        | Reflective XSS detection via payload injection                              |
+|                    | `LFI-Scanner.py`        | Local File Inclusion scanner with content heuristics                        |
+|                    | `SQLi-Scanner.py`       | SQL Injection scanner via error-based detection                             |
+| 🌎 GeoIP           | `geoip-scan.py`         | **NEW!** Resolve location, ISP, timezone from IP/domain                     |
+| 🎮 Launcher        | `CLI.py`                | Master menu to launch any module from one interface                         |
 
 ---
 
-## 📦 Installation
+## 📚 Included Wordlists (Lightweight & Curated)
 
-Clone the repo and install dependencies:
+- `XSS-wordlist.txt` — XSS injection payloads
+- `LFI-wordlist.txt` — Path traversal payloads (`/etc/passwd`, `C:\Windows\`, etc.)
+- `SQLi-wordlist.txt` — SQL injection strings (error-based, boolean, stacked)
+- `directory-wordlist.txt` — Common directories and files for fuzzing
+- `large-params.txt` — Hundreds of parameter names for discovery
+- `usernames.txt` / `passwords.txt` — Sample lists for brute-force (add your own!)
+
+> 💡 **Pro Tip**: Keep wordlists lean. For enterprise use, mount external lists or use `--wordlist` flags.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone & Install
 
 ```bash
-git clone https://github.com/Death-hell/PYSINT.git
-cd PYSINT
-python3 -m pip install -r requirements.txt
+git clone https://github.com/Death-hell/PyToolKit.git
+cd PyToolKit
+pip install -r requirements.txt
+```
 
-Requirements (examples):
+### 2. Run the Master CLI
 
-httpx
-
-dnspython
-
-ipwhois
-
-beautifulsoup4
-
-lxml
-
-
-(See requirements.txt for pinned versions.)
-
-
----
-
-⚙️ Quick Usage
-
-Run the master CLI (menu):
-
+```bash
 python CLI.py
+```
 
-Run a single module:
+### 3. Or Run Any Module Directly
 
-python analyzer-whois.py
-python dns-hunter.py
-python get-html.py
-python find-email-in-html.py
-python subdomain-finder.py
-python param-finder.py
-python directory-fuzzer.py
-python ssl-info.py
-python headers.py
-python wayback-Scan.py
-python tech-detector.py
-python port-scan.py
+```bash
+python geoip-scan.py --target cloudflare.com --debug
+python XSS-Scanner.py --url "https://test.com/search?q=test" --params q --max-payloads 50
+python tech-detector.py --url https://github.com --debug
+```
 
-Vulnerability scanners (examples):
+### 4. View Results
 
-# XSS scanner (async). Provide a URL with params and a payload limit when prompted
-python XSS-Scanner.py
-
-# LFI scanner (async)
-python LFI-Scanner.py
-
-# SQLi scanner (async)
-python SQLi-Scanner.py
-
-Each vuln scanner asks:
-
-Target URL (include at least one ?param=value)
-
-Which parameters to test (or blank to auto-detect)
-
-Maximum payloads to try (0 = all)
-
-
-They report [VULNERABLE] or [SAFE] and print the full tested URL + HTTP status.
-
+All scans auto-save to:
+```
+~/PyToolKit/results/
+```
 
 ---
 
-🛡️ Ethical / Legal Notice
+## 🛡️ Ethical & Legal Notice
 
-Use responsibly.
-This project is intended for educational purposes and authorized testing only. You must have explicit permission to scan any target. The author is not responsible for misuse. Unauthorized scanning or attacks may be illegal.
+> ⚠️ **USE RESPONSIBLY. FOR AUTHORIZED TESTING ONLY.**
 
-Add a --confirm flag or checklist in your workflow to ensure targets are authorized before running automated scans.
-
-
----
-
-🧪 Testing & Tips
-
-When testing the vulnerability modules, limit payloads to 1 or 5 to avoid accidental high traffic.
-
-Run scans against local lab instances (DVWA, WebGoat, custom VMs) before targeting real sites.
-
-Use small concurrency limits if you are scanning fragile targets:
-
-Modify httpx.AsyncClient or add semaphore logic if needed.
-
-
-
+- ✅ Always obtain **explicit written permission** before scanning.
+- ✅ Use on **your own systems** or **bug bounty programs**.
+- ❌ Never scan without consent — it may be **illegal**.
+- 💡 Consider adding `--confirm` or interactive prompts for safety.
 
 ---
 
-🛠 Contributing
+## 🧪 Pro Tips for Testing
 
-Contributions are welcome:
-
-Add new modules (e.g., OSINT integrations, VirusTotal, SecurityTrails)
-
-Improve detection heuristics (fewer false positives)
-
-Add export/reporting (JSON/CSV) and CI checks
-
-Extend wordlists responsibly
-
-
-Please open an issue or a pull request. Keep changes modular and well-documented.
-
+- 🎯 Start with `--max-payloads 5` or `--limit 10` to test modules quickly
+- 🧪 Use local labs: **DVWA**, **OWASP Juice Shop**, **WebGoat**
+- ⏱️ Respect rate limits — adjust `--concurrent` or add `--delay`
+- 💾 Always check `~/PyToolKit/results/` — full context saved in JSON/CSV
 
 ---
 
-📄 License
+## 🤝 Contributing
 
-This project is licensed under the MIT License. See LICENSE for details.
+We ❤️ contributions! Here’s how to help:
 
+- ➕ Add new OSINT modules (SecurityTrails, Shodan, VirusTotal, etc.)
+- 🎯 Improve detection logic (reduce false positives/negatives)
+- 📤 Add export formats: HTML, Markdown, PDF reports
+- 📂 Organize wordlists into `/wordlists/` directory
+- 🧹 Code cleanup, type hints, unit tests
+- 📖 Improve documentation and examples
+
+> ✨ **Modular, documented, and tested PRs get merged fastest!**
 
 ---
 
-📌 Notes
+## 📜 License
 
-Compatible with Python 3.10+ (async features require modern Python).
+**MIT License** — Free for personal, educational, and commercial use.
 
-Tested on Linux and Termux; minor adjustments may be necessary on Windows.
+See [LICENSE](LICENSE) for full terms.
 
-Wordlists live in the repository root — consider splitting them into wordlists/ if you expand the set.
+---
 
-For large scans, respect rate limits and target load — consider batching payloads and lowering concurrency.
+## 📌 System Requirements
 
+- **Python 3.10+** (async/await syntax required)
+- **Linux / Termux** — Fully tested
+- **Windows** — Works with minor adjustments (path separators, asyncio policy)
+- **Dependencies**: `httpx`, `dnspython`, `ipwhois`, `requests`, `rich`, `beautifulsoup4`, `lxml`
 
+---
+
+## 🌈 Why PyToolKit?
+
+> Because OSINT shouldn’t be messy.
+
+PyToolKit brings **structure, speed, and safety** to your reconnaissance workflow. Whether you’re a student, pentester, or bug hunter — this toolkit grows with you.
+
+---
+
+> 🚀 **PyToolKit 2025 — Where elegance meets efficiency in OSINT.**
+
+---
+
+✅ **Ready to clone, run, and dominate your recon game.**  
+✅ **100% GitHub-optimized.**  
+✅ **Zero fluff. Maximum utility.**
+
+---
+
+📌 **Star ⭐ the repo if you find it useful!**  
+💬 **Open an issue if you need help or have ideas!**
 
 ---
