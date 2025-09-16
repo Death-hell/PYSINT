@@ -1,9 +1,34 @@
+# HTTP requests
+httpx>=0.26.0
+requests>=2.31.0
+
+# DNS & IP
+dnspython>=2.3.0
+ipwhois>=1.2.0
+tldextract>=3.4.0
+
+# HTML parsing
+beautifulsoup4>=4.12.0
+
+# Async file I/O
+aiofiles>=23.2.1
+
+# Rich console output
+rich>=13.3.3
+
+# GUI
+customtkinter>=5.2.2
+
+# Others
 python-whois
-ipwhois
-httpx
-re
-dnspython
-requests
-socket
-ssl
-datetime
+
+httpx>=0.26.0
+requests>=2.31.0
+dnspython>=2.3.0
+ipwhois>=1.2.0
+beautifulsoup4>=4.12.0
+tldextract>=3.4.0
+rich>=13.3.3
+textual>=0.25.0
+aiofiles>=23.2.1
+argparse
