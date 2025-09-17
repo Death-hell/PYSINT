@@ -1,174 +1,165 @@
 
----
+```markdown
+# 🧰 PyToolKit — by Death-hell
 
-# 🧰 PyToolKit — Python OSINT & Security Toolkit (2025 Edition)
-
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue?style=for-the-badge)](https://www.python.org/downloads/)
-[![Async Ready](https://img.shields.io/badge/asyncio-modern-green?style=for-the-badge)](https://docs.python.org/3/library/asyncio.html)
-[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
-
-> **PyToolKit** is a modern, modular, and async-ready Python toolkit for **OSINT reconnaissance, web scanning, and security testing** — redesigned in 2025 for performance, reliability, and usability.  
-> ✅ **Ethical Use Only** — For educational purposes and authorized assessments.
+> 🔥 All-in-one Ethical Hacking & Security Toolkit — CLI-based, lightweight, and powerful.  
+> Featuring the **AST-powered JavaScript Vulnerability Scanner** — `jsvulnscan.js` — built for accuracy, not regex.
 
 ---
 
-## 🌟 What’s New in 2025?
-
-We didn’t just update — we **re-engineered**.
-
-- ✨ **All modules refactored** with clean, maintainable, production-ready code
-- ⚡ **Async I/O everywhere** — XSS, SQLi, LFI, Directory, Tech-Detect, Param-Finder now use `asyncio` + `httpx` for blazing-fast scans
-- 🛡️ **Error-proof & robust** — No more crashes on large wordlists or network timeouts
-- 🌍 **New `geoip-scan.py`** — Instantly resolve IPs/domains to location, ISP, timezone
-- 🎨 **Rich CLI interface** — Beautiful tables, progress bars, color-coded results via `rich`
-- 📁 **Structured output** — All scans auto-save to `~/PyToolKit/results/` in **JSON + CSV**
-- 🧭 **Full CLI support** — Every tool now has `--help`, `--debug`, and batch mode
-- 📦 **Lightweight & curated** — No bloat. Only essential, battle-tested wordlists included
-
----
-
-## 🧩 Toolkit Modules
-
-| Category           | Module                  | Description                                                                 |
-|--------------------|-------------------------|-----------------------------------------------------------------------------|
-| 🔍 Intelligence     | `analyzer-whois.py`     | WHOIS & RDAP lookup for domains and IPs                                     |
-| 🌐 DNS             | `dns-hunter.py`         | Query A, MX, TXT, CNAME, NS records from multiple resolvers                 |
-| 🕸️ Web Fetch       | `get-html.py`           | Fetch and preview raw HTML content                                          |
-| 📧 Email Hunter    | `find-email-in-html.py` | Extract emails from page source                                             |
-| 🌳 Subdomains      | `subdomain-finder.py`   | Discover subdomains via crt.sh + active verification                        |
-| 🔑 Parameters      | `param-finder.py`       | Brute-force URL parameters (async, configurable wordlist)                   |
-| 📂 Directories     | `directory-fuzzer.py`   | Find hidden paths/files (async, progress-tracked)                           |
-| 🔐 SSL/TLS         | `ssl-info.py`           | Inspect certificates, validity, SANs, TLS version                           |
-| 📦 Headers         | `headers.py`            | Display HTTP headers + security analysis (HSTS, CSP, etc.)                  |
-| 🕰️ Archives        | `wayback-Scan.py`       | Query historical snapshots from Wayback Machine                             |
-| 🧩 Technologies    | `tech-detector.py`      | Detect CMS, frameworks, JS libs, servers (async, header+HTML patterns)      |
-| 🚪 Ports           | `port-scan.py`          | Fast TCP port scanner for common services                                   |
-| 💥 Vulnerabilities | `XSS-Scanner.py`        | Reflective XSS detection via payload injection                              |
-|                    | `LFI-Scanner.py`        | Local File Inclusion scanner with content heuristics                        |
-|                    | `SQLi-Scanner.py`       | SQL Injection scanner via error-based detection                             |
-| 🌎 GeoIP           | `geoip-scan.py`         | **NEW!** Resolve location, ISP, timezone from IP/domain                     |
-| 🎮 Launcher        | `CLI.py`                | Master menu to launch any module from one interface                         |
+<p align="center">
+  <a href="https://github.com/Death-hell/PyToolKit/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Death-hell/PyToolKit?style=for-the-badge&color=blue" alt="License">
+  </a>
+  <a href="https://github.com/Death-hell/PyToolKit/releases">
+    <img src="https://img.shields.io/github/v/release/Death-hell/PyToolKit?style=for-the-badge&color=green" alt="Release">
+  </a>
+  <a href="https://github.com/Death-hell/PyToolKit/stargazers">
+    <img src="https://img.shields.io/github/stars/Death-hell/PyToolKit?style=for-the-badge&color=yellow" alt="Stars">
+  </a>
+  <a href="https://github.com/Death-hell/PyToolKit/issues">
+    <img src="https://img.shields.io/github/issues/Death-hell/PyToolKit?style=for-the-badge&color=orange" alt="Issues">
+  </a>
+</p>
 
 ---
 
-## 📚 Included Wordlists (Lightweight & Curated)
+## 🚀 Highlights
 
-- `XSS-wordlist.txt` — XSS injection payloads
-- `LFI-wordlist.txt` — Path traversal payloads (`/etc/passwd`, `C:\Windows\`, etc.)
-- `SQLi-wordlist.txt` — SQL injection strings (error-based, boolean, stacked)
-- `directory-wordlist.txt` — Common directories and files for fuzzing
-- `large-params.txt` — Hundreds of parameter names for discovery
-- `usernames.txt` / `passwords.txt` — Sample lists for brute-force (add your own!)
-
-> 💡 **Pro Tip**: Keep wordlists lean. For enterprise use, mount external lists or use `--wordlist` flags.
+✅ **`jsvulnscan.js`** — Interactive AST-based JS vulnerability scanner (eval, XSS, innerHTML, localStorage, etc)  
+✅ **25+ Security Tools** — Recon, Scanning, Fuzzing, Analysis — all in CLI  
+✅ **Zero Bloat** — Single-file tools, no heavy frameworks  
+✅ **Beautiful CLI UX** — Progress spinners, colors, interactive prompts  
+✅ **GitHub-Ready** — Perfect for automation, CI/CD, code scanning, PR checks
 
 ---
 
-## 🚀 Quick Start
+## 🛠️ Tool Inventory
 
-### 1. Clone & Install
+### 🔍 Scanners & Testers
+- `SQLi-Scanner.py` — SQL Injection vulnerability scanner
+- `XSS-Scanner.py` — Cross-Site Scripting tester
+- `LFI-Scanner.py` — Local File Inclusion detector
+- `port-scan.py` — TCP port scanner
+- `directory-fuzzer.py` — Brute-force hidden paths
+- `param-finder.py` — Extract & fuzz URL parameters
+- `malware-testScan.py` — Basic malware indicator scanner
+- `BufferOverFlow-analyzer.py` — Buffer overflow pattern analyzer
+- `Brute-ForceScan.py` — Credential brute-force module
+
+### 🌐 Recon & Enumeration
+- `subdomain-finder.py` — Discover subdomains via DNS & wordlists
+- `dns-hunter.py` — Advanced DNS reconnaissance
+- `tech-detector.py` — Identify web stack (frameworks, servers, etc)
+- `wayback-Scan.py` — Fetch historical URLs from Wayback Machine
+- `get-html.py` — Fetch and save raw HTML
+- `find-email-in-html.py` — Extract emails from HTML source
+- `Number_And_Email-Hunter.py` — Hunt emails & phone numbers in text
+
+### 📊 Info & Analysis
+- `headers.py` — Analyze HTTP security headers
+- `ssl-info.py` — Extract SSL/TLS certificate info
+- `analyzer-whois.py` — WHOIS domain lookup
+- `geoip-scan.py` — Geolocate IP addresses
+- `Traceroute-scan.py` — Trace network path to target
+- `PingPong.py` — ICMP ping with latency stats
+
+### 📁 Wordlists & Payloads
+- `SQLi-wordlist.txt`
+- `XSS-wordlist.txt`
+- `LFI-wordlist.txt`
+- `directory-wordlist.txt`
+- `large-params.txt`
+- `jsreq.txt`
+
+### 🧩 Frameworks & Modules
+- `DarkSINT` / `darksint.py` — Dark web intelligence module
+- `PYSINT` — Python-based OSINT toolkit
+- `metasploit-framework.py` — Metasploit-like CLI interface (educational)
+
+### 🧪 Star Tool: `jsvulnscan.js`
+```bash
+node jsvulnscan.js --interactive
+```
+- ✅ AST parsing with `@babel/parser`
+- ✅ Detects: `eval()`, `document.write`, `innerHTML`, `setTimeout(string)`, `console.log`, sensitive `localStorage`
+- ✅ Colorful CLI with `chalk` + interactive with `inquirer`
+- ✅ Export-ready for GitHub Actions & Code Scanning
+
+---
+
+## ⚙️ Installation
 
 ```bash
 git clone https://github.com/Death-hell/PyToolKit.git
 cd PyToolKit
+
+# Python tools
 pip install -r requirements.txt
+
+# JS scanner
+npm install
 ```
 
-### 2. Run the Master CLI
+> 💡 Requirements:
+> - Python 3.8+
+> - Node.js 18+
+> - Git
+
+---
+
+## 🎯 Quick Start
 
 ```bash
-python CLI.py
+# Scan JS files interactively
+node jsvulnscan.js --interactive
+
+# SQLi test
+python SQLi-Scanner.py -u "https://target.com/page?id=1"
+
+# Subdomain brute-force
+python subdomain-finder.py -d target.com
+
+# Port scan
+python port-scan.py -t 192.168.1.1 -p 22,80,443
+
+# Extract emails from site
+python find-email-in-html.py -u https://target.com
 ```
-
-### 3. Or Run Any Module Directly
-
-```bash
-python geoip-scan.py --target cloudflare.com --debug
-python XSS-Scanner.py --url "https://test.com/search?q=test" --params q --max-payloads 50
-python tech-detector.py --url https://github.com --debug
-```
-
-### 4. View Results
-
-All scans auto-save to:
-```
-~/PyToolKit/results/
-```
-
----
-
-## 🛡️ Ethical & Legal Notice
-
-> ⚠️ **USE RESPONSIBLY. FOR AUTHORIZED TESTING ONLY.**
-
-- ✅ Always obtain **explicit written permission** before scanning.
-- ✅ Use on **your own systems** or **bug bounty programs**.
-- ❌ Never scan without consent — it may be **illegal**.
-- 💡 Consider adding `--confirm` or interactive prompts for safety.
-
----
-
-## 🧪 Pro Tips for Testing
-
-- 🎯 Start with `--max-payloads 5` or `--limit 10` to test modules quickly
-- 🧪 Use local labs: **DVWA**, **OWASP Juice Shop**, **WebGoat**
-- ⏱️ Respect rate limits — adjust `--concurrent` or add `--delay`
-- 💾 Always check `~/PyToolKit/results/` — full context saved in JSON/CSV
-
----
-
-## 🤝 Contributing
-
-We ❤️ contributions! Here’s how to help:
-
-- ➕ Add new OSINT modules (SecurityTrails, Shodan, VirusTotal, etc.)
-- 🎯 Improve detection logic (reduce false positives/negatives)
-- 📤 Add export formats: HTML, Markdown, PDF reports
-- 📂 Organize wordlists into `/wordlists/` directory
-- 🧹 Code cleanup, type hints, unit tests
-- 📖 Improve documentation and examples
-
-> ✨ **Modular, documented, and tested PRs get merged fastest!**
 
 ---
 
 ## 📜 License
 
-**MIT License** — Free for personal, educational, and commercial use.
-
-See [LICENSE](LICENSE) for full terms.
+MIT License — See [LICENSE](LICENSE)
 
 ---
 
-## 📌 System Requirements
+## 🤝 Contribute
 
-- **Python 3.10+** (async/await syntax required)
-- **Linux / Termux** — Fully tested
-- **Windows** — Works with minor adjustments (path separators, asyncio policy)
-- **Dependencies**: `httpx`, `dnspython`, `ipwhois`, `requests`, `rich`, `beautifulsoup4`, `lxml`
-
----
-
-## 🌈 Why PyToolKit?
-
-> Because OSINT shouldn’t be messy.
-
-PyToolKit brings **structure, speed, and safety** to your reconnaissance workflow. Whether you’re a student, pentester, or bug hunter — this toolkit grows with you.
+1. Fork it  
+2. Create your feature branch: `git checkout -b feature/your-feature`  
+3. Commit: `git commit -m 'feat: add your feature'`  
+4. Push: `git push origin feature/your-feature`  
+5. Open a Pull Request 🚀
 
 ---
 
-> 🚀 **PyToolKit 2025 — Where elegance meets efficiency in OSINT.**
+## 📬 Contact
+
+**Death-hell** — Ethical Hacker & Security Toolsmith  
+📧 Email: [deathiswatchingyou937@gmail.com](mailto:deathiswatchingyou937@gmail.com)  
+🐙 GitHub: [@Death-hell](https://github.com/Death-hell)
+
+> “Security is a process, not a product.” — Bruce Schneier
 
 ---
 
-✅ **Ready to clone, run, and dominate your recon game.**  
-✅ **100% GitHub-optimized.**  
-✅ **Zero fluff. Maximum utility.**
+> ⚠️ **Legal Notice**:  
+> This toolkit is for **educational purposes and authorized security testing only**.  
+> Do not use against systems you do not own or have explicit written permission to test.  
+> The author is not responsible for misuse.
 
----
-
-📌 **Star ⭐ the repo if you find it useful!**  
-💬 **Open an issue if you need help or have ideas!**
+```
 
 ---
