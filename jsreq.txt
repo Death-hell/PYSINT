@@ -1,0 +1,3 @@
+npm install chalk inquirer commander @babel/parser @babel/traverse ora
+npm install chalk@4
+npm install inquirer commander @babel/parser @babel/traverse ora chalk

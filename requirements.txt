@@ -32,3 +32,9 @@ rich>=13.3.3
 textual>=0.25.0
 aiofiles>=23.2.1
 argparse
+python-dotenv
+tqdm
+phonenumbers
+stem
+keyboard
+getch
