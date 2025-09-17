@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 subdomain-finder.py - Subdomain Discovery Tool for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Discover subdomains via crt.sh (Certificate Transparency logs)

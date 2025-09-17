@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 param-finder.py - HTTP Parameter Discovery Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Discover active HTTP parameters by appending ?param=test to URLs
@@ -33,7 +33,7 @@ from rich.prompt import Prompt, Confirm
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeElapsedColumn
 
 # ================== DEFAULTS ==================
-DEFAULT_WORDLIST = "large-params.txt"
+DEFAULT_WORDLIST = "wordlist/large-params.txt"
 DEFAULT_MAX_CONCURRENT = 10
 DEFAULT_TIMEOUT = 10.0
 DEFAULT_RESULTS_DIR = Path(os.path.expanduser("~/PYSINT/results"))

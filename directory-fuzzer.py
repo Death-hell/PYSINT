@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 directory-fuzzer.py - Directory & File Brute-Forcer for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Brute-force directories and files using wordlist
@@ -31,7 +31,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeEl
 from rich.prompt import Prompt, Confirm
 
 # ================== DEFAULTS ==================
-DEFAULT_WORDLIST = "directory-wordlist.txt"
+DEFAULT_WORDLIST = "wordlist/directory-wordlist.txt"
 DEFAULT_MAX_CONCURRENT = 10
 DEFAULT_TIMEOUT = 10.0
 DEFAULT_RESULTS_DIR = Path(os.path.expanduser("~/PYSINT/results"))

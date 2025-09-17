@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 XSS-Scanner.py - Cross-Site Scripting Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Scans URL parameters for XSS vulnerabilities via payload reflection
@@ -34,7 +34,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeEl
 from rich.prompt import Prompt, Confirm
 
 # ================== DEFAULTS ==================
-DEFAULT_WORDLIST = "XSS-wordlist.txt"
+DEFAULT_WORDLIST = "wordlist/XSS-wordlist.txt"
 DEFAULT_MAX_CONCURRENT = 10
 DEFAULT_TIMEOUT = 15.0
 DEFAULT_RESULTS_DIR = Path(os.path.expanduser("~/PYSINT/results"))

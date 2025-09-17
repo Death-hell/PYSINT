@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 geoip-scan.py - GeoIP Location Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Resolve domain to IP and fetch GeoIP data (location, ISP, timezone, etc.)

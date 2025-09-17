@@ -3,7 +3,7 @@
 
 """
 Metasploit Installer & Launcher
-Author: YourName
+Author: Mael
 Description:
     Detects OS (Termux, Linux, macOS, Windows),
     Installs Metasploit Framework using recommended scripts,

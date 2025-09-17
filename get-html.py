@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 get-html.py - HTML Fetcher & Viewer for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Fetch and display HTML content from URLs

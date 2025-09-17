@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 dns-hunter.py - Advanced DNS Record Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Query multiple DNS record types (A, MX, NS, TXT, CNAME, AAAA, SOA, etc.)

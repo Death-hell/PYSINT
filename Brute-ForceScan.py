@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Brute-ForceScan.py - Advanced HTTP Login Brute-Forcer for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PYToolKit
 
 Features:
 - POST/GET method support

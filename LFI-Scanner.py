@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 LFI-Scanner.py - Local File Inclusion Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Scans URL parameters for LFI vulnerabilities
@@ -34,7 +34,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeEl
 from rich.prompt import Prompt
 
 # ================== DEFAULTS ==================
-DEFAULT_WORDLIST = "LFI-wordlist.txt"
+DEFAULT_WORDLIST = "wordlist/LFI-wordlist.txt"
 DEFAULT_MAX_CONCURRENT = 10
 DEFAULT_TIMEOUT = 15.0
 DEFAULT_RESULTS_DIR = Path(os.path.expanduser("~/PYSINT/results"))

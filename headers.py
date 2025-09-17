@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 headers.py - HTTP Headers Analyzer for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Fetch and display HTTP headers from URLs

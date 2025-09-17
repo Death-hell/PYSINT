@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 tech-detector.py - Web Technology Detector for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Detect CMS, frameworks, JavaScript libraries, and servers from HTTP responses

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 port-scan.py - TCP Port Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Scan TCP ports on a host (IP or domain)

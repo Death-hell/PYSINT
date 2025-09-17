@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Traceroute-scan.py - Advanced Network Traceroute Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Traceroute with ICMP (root) or UDP (no-root) mode

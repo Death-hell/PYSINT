@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 find-email-in-html.py - Email Extractor from Web Pages for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Extract emails from HTML content using regex

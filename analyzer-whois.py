@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 analyzer-whois.py - Domain & IP Whois Analyzer for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Lookup WHOIS for domains (using python-whois)

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 wayback-Scan.py - Wayback Machine Archive Scanner for PYSINT Suite
-Author: YourNameHere
+Author: Mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Fetch archived snapshots from Wayback Machine (web.archive.org)

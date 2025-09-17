@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 ssl-info.py - SSL/TLS Certificate Analyzer for PYSINT Suite
-Author: YourNameHere
+Author: mael
 License: MIT
-Repository: ~/PYSINT
+Repository: ~/PyToolKit
 
 Features:
 - Fetch and display SSL/TLS certificate information
